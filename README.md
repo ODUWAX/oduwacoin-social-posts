@@ -8,7 +8,7 @@ Media in `media/YYYY-MM-DD/` is served through GitHub Pages so Instagram's Graph
 
 ```bash
 python3 generate.py --date 2026-11-12          # renders image.jpg, reel.mp4, meta.json
-pplx credentials run <graph handle> -- python3 publish.py --date 2026-11-12
+IG_ACCESS_TOKEN=... python3 publish.py --date 2026-11-12
 ```
 
 Fonts: Montserrat and Lato (SIL Open Font License, see `fonts/`).

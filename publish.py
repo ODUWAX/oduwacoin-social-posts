@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Publish a generated day's image and/or Reel to Instagram via the Graph API.
 
-Run through the saved credential so the Page token is injected by the proxy:
-  pplx credentials run <graph.facebook.com handle> -- python3 publish.py --date YYYY-MM-DD [--only image|reel]
+Set IG_ACCESS_TOKEN to the Instagram Page token (or run behind an authenticating proxy):
+  python3 publish.py --date YYYY-MM-DD [--only image|reel]
 
 Media must already be live on GitHub Pages (BASE_URL). A log in posted.json prevents double posting.
 """
@@ -19,6 +19,9 @@ LOG = os.path.join(HERE, "posted.json")
 
 def call(method, path, params=None):
     url = f"{GRAPH}/{path}"
+    params = dict(params or {})
+    if os.environ.get("IG_ACCESS_TOKEN"):
+        params["access_token"] = os.environ["IG_ACCESS_TOKEN"]
     if method == "GET":
         r = requests.get(url, params=params, timeout=90)
     else:
