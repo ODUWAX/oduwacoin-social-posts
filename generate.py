@@ -245,7 +245,13 @@ def build_layers(post, W, H, video=False):
     return layers, glow_y
 
 
+STYLE = os.environ.get("OWC_STYLE", "commercial")
+
+
 def render_image(post, path):
+    if STYLE == "commercial":
+        import commercial
+        return commercial.render_image(post, path)
     W, H = 1080, 1350
     layers, gy = build_layers(post, W, H)
     canvas = background(W, H, gy).convert("RGBA")
@@ -255,6 +261,9 @@ def render_image(post, path):
 
 
 def render_reel(post, path, seconds=12, fps=30):
+    if STYLE == "commercial":
+        import commercial
+        return commercial.render_reel(post, path)
     W, H = 1080, 1920
     layers, gy = build_layers(post, W, H, video=True)
     logo_layer = layers[0]
@@ -297,7 +306,7 @@ def render_reel(post, path, seconds=12, fps=30):
 EPOCH = dt.date(2026, 11, 12)
 
 
-def pick(theme, idx, date, price_data):
+def pick(theme, idx, date, price_data, reel=False):
     if theme == "price":
         price, series = price_data
         date_str = date.strftime("%b %d, %Y")
@@ -308,10 +317,12 @@ def pick(theme, idx, date, price_data):
         post = dict(kicker="OWC PRICE UPDATE", price=fmt_usd(price), series=series, change_line=change_line,
                     date_str=date_str, cta="Buy OWC with USDT", url="oduwacoin.io/gift#buy")
         body = C.PRICE_CAPTIONS[idx % len(C.PRICE_CAPTIONS)].format(usd=fmt_usd(price), date=date_str)
-        return post, C.make_caption("price", body)
+        post["theme"] = "price"
+        return post, C.make_caption("price", body, idx, reel)
     items = C.POSTS[theme]
     post = dict(items[idx % len(items)])
-    return post, C.make_caption(theme, post["caption"])
+    post["theme"] = theme
+    return post, C.make_caption(theme, post["caption"], idx, reel)
 
 
 def plan(date):
@@ -334,7 +345,7 @@ def main():
     price_data = coingecko_price() if "price" in (it, vt) else (None, [])
     # each theme cycles its own items every 4 days
     img_post, img_cap = pick(it, n // 4, date, price_data)
-    vid_post, vid_cap = pick(vt, n // 4 + 1, date, price_data)
+    vid_post, vid_cap = pick(vt, n // 4 + 3, date, price_data, reel=True)
     render_image(img_post, os.path.join(out, "image.jpg"))
     if not a.image_only:
         render_reel(vid_post, os.path.join(out, "reel.mp4"))

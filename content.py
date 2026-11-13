@@ -7,12 +7,55 @@ Price posts are generated from live CoinGecko data (see generate.py).
 
 THEMES = ["staking", "oduwapay", "education", "price"]
 
+# Instagram allows at most 5 hashtags per post or Reel (since December 2025). Keep every set at 5.
 HASHTAGS = {
-    "staking": "#OduwaCoin #OWC #Staking #PassiveIncome #Crypto #Blockchain #AfricaTech",
-    "oduwapay": "#OduwaPay #OduwaCoin #OWC #CryptoWallet #GiftCard #Crypto #USDT",
-    "education": "#OduwaCoin #OWC #Blockchain #Layer1 #AfricanBlockchain #Web3 #CryptoEducation",
-    "price": "#OduwaCoin #OWC #CryptoPrice #Crypto #Blockchain #AfricaTech",
+    "staking": "#OduwaCoin #OWC #CryptoStaking #PassiveIncome #AfricaCrypto",
+    "oduwapay": "#OduwaPay #OduwaCoin #OWC #CryptoWallet #AfricaFintech",
+    "education": "#OduwaCoin #OWC #Blockchain #Layer1 #AfricaTech",
+    "price": "#OduwaCoin #OWC #CryptoNews #Altcoins #AfricaCrypto",
 }
+
+# Scroll-stopping first lines, rotated by day. Honest: no price predictions or promised returns.
+HOOKS = {
+    "staking": [
+        "Your OWC shouldn't be sleeping. \U0001F4A4\u27A1\uFE0F\U0001F4B0",
+        "Holding OWC and doing nothing with it? Read this. \U0001F447",
+        "Hold. Stake. Grow. That's the whole strategy. \U0001F4C8",
+        "The quiet move smart OWC holders make. \U0001F92B",
+        "Stop letting your coins just sit there. \u23F3",
+    ],
+    "oduwapay": [
+        "Your money, in your pocket, on your terms. \U0001F4F2",
+        "The gift nobody else is giving this year. \U0001F381",
+        "Sending value across Africa shouldn't feel like 1999. \u26A1",
+        "One app. Send, receive, hold OWC. \U0001F4AA",
+        "Just Oduwa It. \U0001F525",
+    ],
+    "education": [
+        "Africa doesn't need to borrow someone else's blockchain. \U0001F30D",
+        "Most people can't explain this. Can you? \U0001F914",
+        "Quick OduwaCoin lesson. \U0001F4DA",
+        "Built in Africa. Open to the world. \U0001F30D\U0001F680",
+        "Here's what makes OWC different. \U0001F447",
+    ],
+    "price": [
+        "OWC price check. \U0001F4CA Here's where we stand today.",
+        "Daily OWC numbers, straight from CoinGecko. \U0001F4C8",
+        "Where's OduwaCoin trading today? \U0001F440",
+    ],
+}
+
+# Engagement prompts that drive comments, shares and saves (the signals that boost reach).
+ENGAGE = [
+    "\U0001F4AC Comment \"OWC\" if you're holding.",
+    "\U0001F501 Share this with someone who needs to see it.",
+    "\U0001F4CC Save this so you don't forget.",
+    "\U0001F465 Tag a friend who's into crypto.",
+    "\U0001F514 Follow @oduwacoin for daily OWC updates.",
+    "\U0001F30D Where are you watching from? Drop your country below.",
+]
+
+SLOGAN = "Our Money. Our Way. Our Future."
 
 DISCLAIMER = "Crypto involves risk. Nothing here is financial advice."
 
@@ -89,5 +132,11 @@ PRICE_CAPTIONS = [
 ]
 
 
-def make_caption(theme, body):
-    return f"{body}\n\n{DISCLAIMER}\n\n{HASHTAGS[theme]}"
+def make_caption(theme, body, n=0, reel=False):
+    """Viral-style caption: hook, value + link, engagement prompt, slogan, disclaimer, 5 hashtags."""
+    hooks = HOOKS[theme]
+    hook = hooks[n % len(hooks)]
+    if reel:
+        hook += " \U0001F50A"
+    engage = ENGAGE[(n * 2 + (1 if reel else 0)) % len(ENGAGE)]
+    return f"{hook}\n\n{body}\n\n{engage}\n\n{SLOGAN}\n{DISCLAIMER}\n\n{HASHTAGS[theme]}"

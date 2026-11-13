@@ -15,20 +15,26 @@ DOMAIN = re.compile(r"\b(?:https?://)?(?:www\.)?[\w-]+(?:\.[\w-]+)*\.(?:com|io|o
 
 
 def x_text(caption):
-    """Shorten the Instagram caption to fit X: first paragraph + link line + 2 hashtags (<=280)."""
+    """Fit the caption to X: hook + main message (+ link if X_LINKS=1) + 2 hashtags, <=280 chars."""
+    import content as C
     paras = [p.strip() for p in caption.split("\n\n") if p.strip()]
-    body = paras[0]
-    link = next((p for p in paras[1:] if re.search(r"\b[\w-]+\.(com|io)\b", p)), "")
+    hooks = {h for hs in C.HOOKS.values() for h in hs}
+    has_hook = any(paras[0].startswith(h) for h in hooks) and len(paras) > 1
+    hook = paras[0] if has_hook else ""
+    rest = paras[1:] if has_hook else paras
+    body = rest[0]
+    link = next((p for p in rest[1:] if re.search(r"\b[\w-]+\.(com|io)\b", p)), "")
     link = link.splitlines()[-1].replace(" (link in bio)", "") if link else ""
     if link and link in body:
         link = ""
     if not X_LINKS:
         link = ""
         body = DOMAIN.sub(lambda m: "the link in our bio" + "." * (len(m.group()) - len(m.group().rstrip("."))), body)
+    head = f"{hook}\n\n{body}" if hook else body
     budget = 280 - len(TAGS) - (len(link) + 2 if link else 0) - 2
-    if len(body) > budget:
-        body = body[: budget - 1].rsplit(" ", 1)[0].rstrip(",.;:") + "\u2026"
-    return "\n\n".join([p for p in (body, link, TAGS) if p])
+    if len(head) > budget:
+        head = head[: budget - 1].rsplit(" ", 1)[0].rstrip(",.;:") + "\u2026"
+    return "\n\n".join([p for p in (head, link, TAGS) if p])
 
 
 def run(cmd):
