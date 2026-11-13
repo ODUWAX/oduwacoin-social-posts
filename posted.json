@@ -15,6 +15,18 @@
       "theme": "education",
       "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-12/reel.mp4",
       "content_type": "video/mp4"
+    },
+    "fb_image": {
+      "id": "154546045188430_1697130752426254",
+      "permalink": "https://www.facebook.com/1697130789092917/posts/1697130752426254",
+      "theme": "staking",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-12/image.jpg"
+    },
+    "fb_reel": {
+      "id": "1109796825007571",
+      "permalink": "https://www.facebook.com/reel/1109796825007571/",
+      "theme": "education",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-12/reel.mp4"
     }
   }
 }

@@ -11,6 +11,7 @@ print = functools.partial(print, flush=True)
 import requests
 
 IG_USER = "17841407053927946"  # @oduwacoin, linked to Oduwa Blockchain Solutions Page
+FB_PAGE = "154546045188430"  # Oduwa Blockchain Solutions Facebook Page
 GRAPH = "https://graph.facebook.com/v21.0"
 BASE_URL = "https://oduwax.github.io/oduwacoin-social-posts"
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -74,29 +75,59 @@ def publish(kind, date, meta):
                 theme=meta[kind]["theme"], url=url, content_type=ctype)
 
 
+def publish_fb(kind, date, meta):
+    rel = f"media/{date}/" + ("image.jpg" if kind == "image" else "reel.mp4")
+    url = f"{BASE_URL}/{rel}"
+    wait_public(url)
+    caption = meta[kind]["caption"]
+    if kind == "image":
+        r = call("POST", f"{FB_PAGE}/photos", {"url": url, "caption": caption, "published": "true"})
+        pid = r.get("post_id") or r["id"]
+    else:
+        r = call("POST", f"{FB_PAGE}/videos", {"file_url": url, "description": caption, "published": "true"})
+        pid = r["id"]
+    link = None
+    try:
+        link = call("GET", pid, {"fields": "permalink_url"}).get("permalink_url")
+    except Exception:
+        pass
+    if link and link.startswith("/"):
+        link = "https://www.facebook.com" + link
+    return dict(id=pid, permalink=link or f"https://www.facebook.com/{pid}", theme=meta[kind]["theme"], url=url)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", required=True)
     ap.add_argument("--only", choices=["image", "reel"])
+    ap.add_argument("--platforms", default="instagram,facebook")
     a = ap.parse_args()
     meta = json.load(open(os.path.join(HERE, "media", a.date, "meta.json")))
     log = json.load(open(LOG)) if os.path.exists(LOG) else {}
     day = log.setdefault(a.date, {})
     kinds = [a.only] if a.only else ["image", "reel"]
+    plats = a.platforms.split(",")
     ok = True
     for k in kinds:
-        if k in day:
-            print(f"{k}: already posted {day[k].get('permalink')}")
-            continue
-        try:
-            day[k] = publish(k, a.date, meta)
-            print(f"{k}: posted {day[k]['permalink']}")
-        except Exception as e:
-            ok = False
-            print(f"{k}: FAILED {e}", file=sys.stderr)
-        json.dump(log, open(LOG, "w"), indent=2)
-    lim = call("GET", f"{IG_USER}/content_publishing_limit", {"fields": "quota_usage,config"})
-    print("quota:", json.dumps(lim.get("data")))
+        jobs = []
+        if "instagram" in plats:
+            jobs.append((k, "instagram", publish))
+        if "facebook" in plats:
+            jobs.append((f"fb_{k}", "facebook", publish_fb))
+        for key, name, fn in jobs:
+            if key in day:
+                print(f"{name} {k}: already posted {day[key].get('permalink')}")
+                continue
+            try:
+                day[key] = fn(k, a.date, meta)
+                print(f"{name} {k}: posted {day[key]['permalink']}")
+            except Exception as e:
+                ok = False
+                print(f"{name} {k}: FAILED {e}", file=sys.stderr)
+            json.dump(log, open(LOG, "w"), indent=2)
+    if "instagram" in plats:
+        lim = call("GET", f"{IG_USER}/content_publishing_limit", {"fields": "quota_usage,config"})
+        print("instagram quota:", json.dumps(lim.get("data")))
     sys.exit(0 if ok else 1)
 
 
