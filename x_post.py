@@ -9,6 +9,9 @@ import argparse, json, os, re, subprocess, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 LOG = os.path.join(HERE, "posted.json")
 TAGS = "#OduwaCoin #OWC"
+# X charges far more for posts that contain a URL, so links are left out unless X_LINKS=1.
+X_LINKS = os.environ.get("X_LINKS", "0") == "1"
+DOMAIN = re.compile(r"\b(?:https?://)?(?:www\.)?[\w-]+(?:\.[\w-]+)*\.(?:com|io|org|net)\b[\w/#?=&.-]*")
 
 
 def x_text(caption):
@@ -19,6 +22,9 @@ def x_text(caption):
     link = link.splitlines()[-1].replace(" (link in bio)", "") if link else ""
     if link and link in body:
         link = ""
+    if not X_LINKS:
+        link = ""
+        body = DOMAIN.sub(lambda m: "the link in our bio" + "." * (len(m.group()) - len(m.group().rstrip("."))), body)
     budget = 280 - len(TAGS) - (len(link) + 2 if link else 0) - 2
     if len(body) > budget:
         body = body[: budget - 1].rsplit(" ", 1)[0].rstrip(",.;:") + "\u2026"
