@@ -175,8 +175,14 @@ def pill(text, fnt, padx=46, pady=22):
 
 
 def logo(size):
-    im = Image.open(os.path.join(ASSETS, "oduwacoin-icon.png")).convert("RGBA")
-    return im.resize((size, size), Image.LANCZOS)
+    im = Image.open(os.path.join(ASSETS, "oduwacoin-original.png")).convert("RGBA")
+    im = im.resize((size, size), Image.LANCZOS)
+    # thin gold ring so the black badge stands out from the dark background
+    ring = Image.new("RGBA", (size * 4, size * 4), (0, 0, 0, 0))
+    w = max(8, size // 30)
+    ImageDraw.Draw(ring).ellipse((w // 2, w // 2, size * 4 - w // 2, size * 4 - w // 2), outline=GOLD + (255,), width=w)
+    im.alpha_composite(ring.resize((size, size), Image.LANCZOS))
+    return im
 
 
 def sparkline(series, w, h):
