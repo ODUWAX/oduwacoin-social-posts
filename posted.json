@@ -38,5 +38,26 @@
       "permalink": "https://x.com/Oduwacoin/status/2121056328537797117",
       "theme": "education"
     }
+  },
+  "2026-11-13": {
+    "image": {
+      "media_id": "17958248700314191",
+      "permalink": "https://www.instagram.com/p/DfsIEJBl4aC/",
+      "timestamp": "2026-11-13T17:05:13+0000",
+      "theme": "oduwapay",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-13/image.jpg",
+      "content_type": "image/jpeg"
+    },
+    "fb_image": {
+      "id": "154546045188430_1697987715673891",
+      "permalink": "https://www.facebook.com/1697130789092917/posts/1697987715673891",
+      "theme": "oduwapay",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-13/image.jpg"
+    },
+    "x_image": {
+      "id": "2121288322467209430",
+      "permalink": "https://x.com/Oduwacoin/status/2121288322467209430",
+      "theme": "oduwapay"
+    }
   }
 }
