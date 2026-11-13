@@ -78,6 +78,17 @@ def brand_row(size=88):
     return im
 
 
+def badge(text, size=28):
+    """Gold label on a dark rounded plate, readable over busy photos."""
+    t = G.text_layer([text], G.font("Montserrat-Bold.ttf", size), G.GOLD, tracking=5)
+    px, py = 24, 12
+    im = Image.new("RGBA", (t.width + 2 * px, t.height + 2 * py), (0, 0, 0, 0))
+    ImageDraw.Draw(im).rounded_rectangle((0, 0, im.width - 1, im.height - 1), radius=im.height // 2,
+                                         fill=(0, 0, 0, 200), outline=G.GOLD + (200,), width=2)
+    im.alpha_composite(t, (px, py))
+    return im
+
+
 def shadowed(img, radius=14, alpha=200):
     """Add a soft dark shadow behind an RGBA element for legibility."""
     pad = radius * 2
@@ -98,7 +109,7 @@ def render_image(post, path):
     main = scene(SCENE_FOR[theme][0], W)
     sname = SCENE_FOR[theme][0]
     bottom = sname in TEXT_BOTTOM
-    off = {"pay_screen": 360, "coin_hero": 330, "staking": 300, "network": 170}.get(sname, 280)
+    off = {"pay_screen": 415, "coin_hero": 330, "staking": 300, "network": 170}.get(sname, 280)
     off = min(off, main.height - H)
     canvas = main.crop((0, off, W, off + H)).convert("RGBA")
     canvas.alpha_composite(vignette(W, H))
@@ -107,7 +118,7 @@ def render_image(post, path):
     canvas.alpha_composite(brand_row(84), (M, 64))
 
     tmp = ImageDraw.Draw(Image.new("L", (1, 1)))
-    k = G.text_layer([post["kicker"]], G.font("Montserrat-Bold.ttf", 30), G.GOLD, align="left", tracking=6)
+    k = badge(post["kicker"]) if bottom else G.text_layer([post["kicker"]], G.font("Montserrat-Bold.ttf", 30), G.GOLD, align="left", tracking=6)
     if post.get("price"):
         hl = [G.text_layer(["1 OWC ="], G.font("Montserrat-Black.ttf", 96), G.WHITE, align="left", spacing=1.0),
               G.text_layer([post["price"]], G.fit_font(tmp, [post["price"]], "Montserrat-Black.ttf", W - 2 * M, 150), None,
@@ -339,7 +350,7 @@ def render_reel(post, path, seconds=15, fps=30):
     brand = brand_row(92)
 
     # scene 1 elements
-    kick = G.text_layer([post["kicker"]], G.font("Montserrat-Bold.ttf", 38), G.GOLD, align="left", tracking=7)
+    kick = badge(post["kicker"], 34) if bottom else G.text_layer([post["kicker"]], G.font("Montserrat-Bold.ttf", 38), G.GOLD, align="left", tracking=7)
     if post.get("price"):
         hl_src = "1 OWC =\n" + post["price"]
     else:
