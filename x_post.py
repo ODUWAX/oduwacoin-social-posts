@@ -55,12 +55,30 @@ def find(obj, key):
 
 
 def last_json(out):
+    """Return the last JSON object in xurl output (it may print status lines after the JSON)."""
+    out = re.sub(r"\x1b\[[0-9;]*m", "", out)
+    dec = json.JSONDecoder()
     for start in [m.start() for m in re.finditer(r"^\{", out, re.M)][::-1]:
         try:
-            return json.loads(out[start:])
+            return dec.raw_decode(out[start:])[0]
         except Exception:
             continue
     return json.loads(out)
+
+
+def wait_processed(media_id, timeout=300):
+    """X processes videos after upload; posting before it finishes gives "media IDs are invalid"."""
+    import time
+    end = time.time() + timeout
+    while time.time() < end:
+        info = find(last_json(run(["xurl", "media", "status", media_id])), "processing_info") or {}
+        state = info.get("state")
+        if state == "succeeded" or not info:
+            return
+        if state == "failed":
+            raise RuntimeError(f"X video processing failed: {info}")
+        time.sleep(max(2, int(info.get("check_after_secs", 3))))
+    raise RuntimeError("X video processing timed out")
 
 
 def main():
@@ -83,6 +101,8 @@ def main():
     media_id = find(last_json(up), "id") or find(last_json(up), "media_id_string") or find(last_json(up), "media_id")
     if not media_id:
         raise RuntimeError(f"No media id in upload response: {up[:300]}")
+    if a.only == "reel":
+        wait_processed(str(media_id))
     text = x_text(meta[a.only]["caption"])
     out = run(["xurl", "post", text, "--media-id", str(media_id)])
     tid = find(last_json(out), "id")
