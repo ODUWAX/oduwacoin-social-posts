@@ -72,5 +72,14 @@
       "permalink": "https://x.com/Oduwacoin/status/2121424165945155806",
       "theme": "price"
     }
+  },
+  "manual": {
+    "gift-card-24s": {
+      "media_id": "17966310564211807",
+      "permalink": "https://www.instagram.com/reel/DftRWBhDQ5h/",
+      "timestamp": "2026-11-14T03:45:43+0000",
+      "theme": "gift",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/manual/gift-card-24s/reel.mp4"
+    }
   }
 }
