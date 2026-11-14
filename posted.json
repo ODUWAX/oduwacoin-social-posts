@@ -86,5 +86,26 @@
       "permalink": "https://x.com/Oduwacoin/status/2121454241017483463",
       "theme": "gift"
     }
+  },
+  "2026-11-14": {
+    "image": {
+      "media_id": "18010854578786621",
+      "permalink": "https://www.instagram.com/p/DfuszeWl-7y/",
+      "timestamp": "2026-11-14T17:04:44+0000",
+      "theme": "education",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-14/image.jpg",
+      "content_type": "image/jpeg"
+    },
+    "fb_image": {
+      "id": "154546045188430_1699241335548529",
+      "permalink": "https://www.facebook.com/1697130789092917/posts/1699241335548529",
+      "theme": "education",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-14/image.jpg"
+    },
+    "x_image": {
+      "id": "2121650595958341634",
+      "permalink": "https://x.com/Oduwacoin/status/2121650595958341634",
+      "theme": "education"
+    }
   }
 }
