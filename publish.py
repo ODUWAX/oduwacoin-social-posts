@@ -6,6 +6,7 @@ Set IG_ACCESS_TOKEN to the Instagram Page token (or run behind an authenticating
 
 Media must already be live on GitHub Pages (BASE_URL). A log in posted.json prevents double posting.
 """
+import content as C
 import argparse, functools, json, os, sys, time
 print = functools.partial(print, flush=True)
 import requests
@@ -79,7 +80,7 @@ def publish_fb(kind, date, meta):
     rel = f"media/{date}/" + ("image.jpg" if kind == "image" else "reel.mp4")
     url = f"{BASE_URL}/{rel}"
     wait_public(url)
-    caption = meta[kind]["caption"]
+    caption = C.facebook_caption(meta[kind]["caption"])
     if kind == "image":
         r = call("POST", f"{FB_PAGE}/photos", {"url": url, "caption": caption, "published": "true"})
         pid = r.get("post_id") or r["id"]

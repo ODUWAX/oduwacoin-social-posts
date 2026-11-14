@@ -140,3 +140,17 @@ def make_caption(theme, body, n=0, reel=False):
         hook += " \U0001F50A"
     engage = ENGAGE[(n * 2 + (1 if reel else 0)) % len(ENGAGE)]
     return f"{hook}\n\n{body}\n\n{engage}\n\n{SLOGAN}\n{DISCLAIMER}\n\n{HASHTAGS[theme]}"
+
+
+def facebook_caption(caption):
+    """Facebook demotes and can block "engagement bait" (comment/share/tag requests), so drop those lines
+    and the Reel sound cue, and keep only the first 3 hashtags."""
+    out = []
+    for para in caption.split("\n\n"):
+        p = para.strip()
+        if p in ENGAGE:
+            continue
+        if p.startswith("#"):
+            p = " ".join(p.split()[:3])
+        out.append(p.replace(" \U0001F50A", ""))
+    return "\n\n".join(out)
