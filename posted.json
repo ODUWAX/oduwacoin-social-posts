@@ -106,6 +106,25 @@
       "id": "2121650595958341634",
       "permalink": "https://x.com/Oduwacoin/status/2121650595958341634",
       "theme": "education"
+    },
+    "reel": {
+      "media_id": "18116875895605131",
+      "permalink": "https://www.instagram.com/reel/DfvqmTQj6ut/",
+      "timestamp": "2026-11-15T02:04:59+0000",
+      "theme": "staking",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-14/reel.mp4",
+      "content_type": "video/mp4"
+    },
+    "fb_reel": {
+      "id": "1677013160482885",
+      "permalink": "https://www.facebook.com/reel/1677013160482885/",
+      "theme": "staking",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-14/reel.mp4"
+    },
+    "x_reel": {
+      "id": "2121786592285061604",
+      "permalink": "https://x.com/Oduwacoin/status/2121786592285061604",
+      "theme": "staking"
     }
   }
 }
