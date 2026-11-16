@@ -5,6 +5,8 @@ Captions get the shared hashtag + disclaimer footer appended in make_caption().
 Price posts are generated from live CoinGecko data (see generate.py).
 """
 
+import re
+
 THEMES = ["staking", "oduwapay", "education", "price"]
 
 # Instagram allows at most 5 hashtags per post or Reel (since December 2025). Keep every set at 5.
@@ -153,4 +155,5 @@ def facebook_caption(caption):
         if p.startswith("#"):
             p = " ".join(p.split()[:3])
         out.append(p.replace(" \U0001F50A", ""))
-    return "\n\n".join(out)
+    # Facebook has blocked every post that linked oduwacoin.io/gift as spam; link the homepage instead.
+    return re.sub(r"oduwacoin\.io/gift(#buy)?", "oduwacoin.io", "\n\n".join(out))

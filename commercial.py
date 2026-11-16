@@ -460,7 +460,8 @@ def render_reel(post, path, seconds=15, fps=30):
     music(wav, seconds)
     subprocess.run([
         "ffmpeg", "-y", "-loglevel", "error", "-framerate", str(fps), "-i", os.path.join(tmpd, "f%04d.jpg"),
-        "-i", wav, "-c:v", "libx264", "-pix_fmt", "yuv420p", "-profile:v", "high", "-preset", "medium", "-crf", "19",
+        "-i", wav, "-vf", "scale=in_range=full:out_range=tv,format=yuv420p", "-color_range", "tv",
+        "-c:v", "libx264", "-pix_fmt", "yuv420p", "-profile:v", "high", "-level", "4.1", "-preset", "medium", "-crf", "21", "-maxrate", "6M", "-bufsize", "12M",
         "-r", str(fps), "-g", str(fps * 2), "-c:a", "aac", "-b:a", "160k", "-ar", "44100",
         "-movflags", "+faststart", "-shortest", path,
     ], check=True)
