@@ -198,5 +198,18 @@
       "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-16/reel.mp4",
       "content_type": "video/mp4"
     }
+  },
+  "2026-11-17": {
+    "fb_image": {
+      "id": "154546045188430_1703095221829807",
+      "permalink": "https://www.facebook.com/1697130789092917/posts/1703095221829807",
+      "theme": "oduwapay",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-17/image.jpg"
+    },
+    "x_image": {
+      "id": "2122737729163165847",
+      "permalink": "https://x.com/Oduwacoin/status/2122737729163165847",
+      "theme": "oduwapay"
+    }
   }
 }
