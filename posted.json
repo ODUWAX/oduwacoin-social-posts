@@ -178,6 +178,17 @@
       "id": "2122375542351495549",
       "permalink": "https://x.com/Oduwacoin/status/2122375542351495549",
       "theme": "staking"
+    },
+    "fb_reel": {
+      "id": "1997886447846912",
+      "permalink": "https://www.facebook.com/reel/1997886447846912/",
+      "theme": "education",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-16/reel.mp4"
+    },
+    "x_reel": {
+      "id": "2122511240236789886",
+      "permalink": "https://x.com/Oduwacoin/status/2122511240236789886",
+      "theme": "education"
     }
   }
 }
