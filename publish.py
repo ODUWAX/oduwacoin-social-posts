@@ -69,7 +69,19 @@ def publish(kind, date, meta):
         c = call("POST", f"{IG_USER}/media", {"media_type": "REELS", "video_url": url, "caption": caption,
                                                "share_to_feed": "true"})
     cid = c["id"]
-    wait_container(cid)
+    for attempt in range(3):
+        try:
+            wait_container(cid)
+            break
+        except RuntimeError as e:
+            # Instagram sometimes fails video processing (2207077) on a file that
+            # succeeds unchanged minutes later; build a fresh container and retry.
+            if kind != "reel" or "2207077" not in str(e) or attempt == 2:
+                raise
+            print(f"instagram reel: processing error, retrying in 120s ({e})", flush=True)
+            time.sleep(120)
+            cid = call("POST", f"{IG_USER}/media", {"media_type": "REELS", "video_url": url, "caption": caption,
+                                                   "share_to_feed": "true"})["id"]
     p = call("POST", f"{IG_USER}/media_publish", {"creation_id": cid})
     info = call("GET", p["id"], {"fields": "permalink,timestamp"})
     return dict(media_id=p["id"], permalink=info.get("permalink"), timestamp=info.get("timestamp"),

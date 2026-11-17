@@ -14,7 +14,7 @@ if [ ! -f "media/$DATE/meta.json" ] || [ ! -f "media/$DATE/reel.mp4" ]; then
   git commit -q -m "Media for $DATE"
   git push -q
 fi
-timeout 1200 ${PUBLISH_WRAPPER:-} python3 publish.py --date "$DATE" --only "$KIND" --platforms "${PLATFORMS:-instagram,facebook}" || STATUS=$?
+timeout 1800 ${PUBLISH_WRAPPER:-} python3 publish.py --date "$DATE" --only "$KIND" --platforms "${PLATFORMS:-instagram,facebook}" || STATUS=$?
 if [ "${POST_TO_X:-1}" = "1" ]; then
   timeout 900 python3 x_post.py --date "$DATE" --only "$KIND" || STATUS=$?
 fi
