@@ -62,7 +62,7 @@ def publish(kind, date, meta):
     rel = f"media/{date}/" + ("image.jpg" if kind == "image" else "reel.mp4")
     url = f"{BASE_URL}/{rel}"
     ctype = wait_public(url)
-    caption = meta[kind]["caption"]
+    caption = C.instagram_caption(meta[kind]["caption"])
     if kind == "image":
         c = call("POST", f"{IG_USER}/media", {"image_url": url, "caption": caption})
     else:

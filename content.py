@@ -157,3 +157,8 @@ def facebook_caption(caption):
         out.append(p.replace(" \U0001F50A", ""))
     # Facebook has blocked every post that linked oduwacoin.io/gift as spam; link the homepage instead.
     return re.sub(r"oduwacoin\.io/gift(#buy)?", "oduwacoin.io", "\n\n".join(out))
+
+
+def instagram_caption(caption):
+    """Instagram has action-blocked image posts whose caption linked oduwacoin.io/gift; link the homepage instead."""
+    return re.sub(r"oduwacoin\.io/gift(#buy)?", "oduwacoin.io", caption)
