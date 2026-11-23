@@ -5,6 +5,9 @@
 # Generates today's media if missing (Pacific date), pushes it to GitHub Pages, then publishes one post.
 set -euo pipefail
 KIND="$1"
+# Commits in this repo are always made as ODUWAX, whichever GitHub account is signed in (owner's rule).
+export GIT_AUTHOR_NAME=ODUWAX GIT_AUTHOR_EMAIL=40502564+ODUWAX@users.noreply.github.com
+export GIT_COMMITTER_NAME=ODUWAX GIT_COMMITTER_EMAIL=40502564+ODUWAX@users.noreply.github.com
 cd "$(dirname "$0")"
 git pull -q --rebase
 DATE=$(TZ=America/Los_Angeles date +%F)
