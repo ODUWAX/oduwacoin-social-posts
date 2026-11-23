@@ -278,5 +278,26 @@
       "permalink": "https://x.com/Oduwacoin/status/2123520559837331727",
       "theme": "oduwapay"
     }
+  },
+  "2026-11-23": {
+    "image": {
+      "media_id": "18139827304635667",
+      "permalink": "https://www.instagram.com/p/DgF4I8Hl2Zc/",
+      "timestamp": "2026-11-23T17:06:08+0000",
+      "theme": "price",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-23/image.jpg",
+      "content_type": "image/jpeg"
+    },
+    "fb_image": {
+      "id": "154546045188430_1709876074485055",
+      "permalink": "https://www.facebook.com/1697130789092917/posts/1709876074485055",
+      "theme": "price",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-23/image.jpg"
+    },
+    "x_image": {
+      "id": "2124912437782569218",
+      "permalink": "https://x.com/Oduwacoin/status/2124912437782569218",
+      "theme": "price"
+    }
   }
 }
