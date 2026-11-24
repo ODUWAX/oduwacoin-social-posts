@@ -318,5 +318,26 @@
       "permalink": "https://x.com/Oduwacoin/status/2125048296309670307",
       "theme": "oduwapay"
     }
+  },
+  "2026-11-24": {
+    "image": {
+      "media_id": "18021603695952756",
+      "permalink": "https://www.instagram.com/p/DgIc0dxl2Pl/",
+      "timestamp": "2026-11-24T17:05:08+0000",
+      "theme": "staking",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-24/image.jpg",
+      "content_type": "image/jpeg"
+    },
+    "fb_image": {
+      "id": "154546045188430_1711042494368413",
+      "permalink": "https://www.facebook.com/1697130789092917/posts/1711042494368413",
+      "theme": "staking",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-24/image.jpg"
+    },
+    "x_image": {
+      "id": "2125274573952143719",
+      "permalink": "https://x.com/Oduwacoin/status/2125274573952143719",
+      "theme": "staking"
+    }
   }
 }
