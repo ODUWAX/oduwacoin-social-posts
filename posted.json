@@ -413,5 +413,26 @@
       "permalink": "https://x.com/Oduwacoin/status/2125420754627932172",
       "theme": "next-of-kin"
     }
+  },
+  "2026-11-25": {
+    "image": {
+      "media_id": "18151145656568693",
+      "permalink": "https://www.instagram.com/p/DgLBoUQlyUo/",
+      "timestamp": "2026-11-25T17:05:27+0000",
+      "theme": "oduwapay",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-25/image.jpg",
+      "content_type": "image/jpeg"
+    },
+    "fb_image": {
+      "id": "154546045188430_1712231474249515",
+      "permalink": "https://www.facebook.com/1697130789092917/posts/1712231474249515",
+      "theme": "oduwapay",
+      "url": "https://oduwax.github.io/oduwacoin-social-posts/media/2026-11-25/image.jpg"
+    },
+    "x_image": {
+      "id": "2125637039752143108",
+      "permalink": "https://x.com/Oduwacoin/status/2125637039752143108",
+      "theme": "oduwapay"
+    }
   }
 }
