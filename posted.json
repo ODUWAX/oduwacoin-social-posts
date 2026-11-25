@@ -398,5 +398,20 @@
       "permalink": "https://x.com/Oduwacoin/status/2125371840931430886",
       "theme": "staking"
     }
+  },
+  "next-of-kin-2026-11-24": {
+    "image": {
+      "permalink": "https://www.instagram.com/p/DgJfP_zjdhq/",
+      "theme": "next-of-kin"
+    },
+    "fb_image": {
+      "permalink": "https://www.facebook.com/1697130789092917/posts/1711497014322961",
+      "theme": "next-of-kin"
+    },
+    "x_image": {
+      "id": "2125420754627932172",
+      "permalink": "https://x.com/Oduwacoin/status/2125420754627932172",
+      "theme": "next-of-kin"
+    }
   }
 }
