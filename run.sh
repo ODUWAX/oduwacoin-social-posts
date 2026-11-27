@@ -10,6 +10,7 @@ export GIT_AUTHOR_NAME=ODUWAX GIT_AUTHOR_EMAIL=40502564+ODUWAX@users.noreply.git
 export GIT_COMMITTER_NAME=ODUWAX GIT_COMMITTER_EMAIL=40502564+ODUWAX@users.noreply.github.com
 cd "$(dirname "$0")"
 git pull -q --rebase
+if [ -f PAUSED ]; then echo "Posting is paused (PAUSED file present); nothing posted."; exit 0; fi
 DATE=$(TZ=America/Los_Angeles date +%F)
 if [ ! -f "media/$DATE/meta.json" ] || [ ! -f "media/$DATE/reel.mp4" ]; then
   timeout 1500 python3 generate.py --date "$DATE"
